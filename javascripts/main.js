@@ -19,49 +19,54 @@
 
 		starter = 1;
 
-		this.start = function (callback) {
-			prepareBoard();
-			that.printBoard();
-			renderBoard();
-
-			if (callback) {
-				callback();
-			}
-			simulatePlay();
-		};
-
-		function prepareBoard() {
+		this.prepareBoard = function () {
 			for (var i = 0; i < BOARD_SIZE; i++) {
 					board.push(new Array(BOARD_SIZE).fill(0));
 				}
-		}
+		};
 
-		 function renderBoard () {
-			for (var i = 0; i < board.length; i++) {
-				for (var j = 0; j < board[0].length; j++) {
-					var renderThis = document.createElement('div');
-					renderThis.setAttribute('class', 'empty-space animtae');
-					renderThis.setAttribute('id', 'pos_' + i + '_' + j);
-					renderThis.onclick = function () {
-						play(i, j);
+		this.renderBoard = function () {
+			var i = 0;
+			for (row of board) {
+				var j = 0;
+				var column = document.createElement('div');
+				column.setAttribute('class', 'table-row');
+				for (cell of row) {
+					var cell = document.createElement('div');
+					cell.setAttribute('class', 'div-table-col');
+					cell.setAttribute('id', 'pos_' + i + '_' + j);
+					cell.onclick = function () {
+						var getXY = this.id.split('_');
+						that.play(parseInt(getXY[1], 10), parseInt(getXY[2], 10));
 					};
-					$container.appendChild(renderThis);
+					column.appendChild(cell);
+					j++;
 				}
+				$container.appendChild(column);
+				i++;
 			}
-		}
+		};
 
 		this.play = function (x, y) {
 			if (board[x][y] === 0) {
 				board[x][y] = starter;
 				starter = (starter == 1 ? 2 : 1);
-			}
+				that.printBoard();
+				that.renderMove(x, y, starter);
+				var hasWinner = that.anyWinner();
 
-			that.printBoard();
-			var hasWinner = that.anyWinner();
-
-			if (hasWinner) {
-				that.doWinner();
+				if (hasWinner) {
+					that.doWinner();
+				}
 			}
+		};
+
+		this.renderMove = function (x, y, sign) {
+			var cell = document.querySelector('#pos_' + x + '_' + y);
+			var innerSpan = document.createElement('span');
+			innerSpan.setAttribute('style', 'line-height: 85px');
+			innerSpan.textContent = (sign == 1 ? 'X' : 'O');
+			cell.appendChild(innerSpan);
 		};
 
 		this.doWinner = function () {
@@ -74,13 +79,13 @@
 
 			for (winState of winStates) {
 				if (found) { break; }
-				found = checkWinState(winState);
+				found = that.checkWinState(winState);
 			}
 			return found;
 		};
 
 
-		function checkWinState(winState) {
+		this.checkWinState = function (winState) {
 			var last;
 
 			for (position of winState) {
@@ -112,6 +117,17 @@
 			}
 
 			console.log (result);
+		};
+
+		this.start = function (callback) {
+			that.prepareBoard();
+			that.printBoard();
+			that.renderBoard();
+
+			if (callback) {
+				callback();
+			}
+			//simulatePlay();
 		};
 	}
 

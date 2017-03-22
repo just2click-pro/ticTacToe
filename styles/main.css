@@ -17,25 +17,39 @@ a, a:hover {
   text-decoration: none;
 }
 
+.container {
+	margin: 10px auto;
+  padding: 40px 15px;
+  text-align: center;
+}
+
 .game-board {
 	border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
   border-bottom: 1px solid #000;
   border-right: 1px solid #000;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.75);
+  clear:both;
+  display: table;
   height: 270px;
   margin: 20px auto;
   width: 270px;
   padding: 5px 4px;
 }
 
-.game-board .empty-space {
+.game-board .table-row {
+	display: table-row;
+	width: auto;
+}
+
+.table-row .div-table-col {
 	border-bottom: 1px solid #ccc;
   border-right: 1px solid #ccc;
   border-top: 1px solid #000;
   border-left: 1px solid #000;
-	display: inline-block;
+	display: table-cell;
+	float: left;
   height: 85px;
-  width: 85px;
   margin: -1px 0 -4px 1px;
+  width: 85px;
 }
