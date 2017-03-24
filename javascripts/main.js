@@ -39,13 +39,16 @@
 						var getXY = this.id.split('_');
 						that.play(parseInt(getXY[1], 10), parseInt(getXY[2], 10));
 					};
+					cell.onmouseover = function (e) {
+						$cursor.textContent = (starter === 2 ? 'X' : 'O');
+					};
 					column.appendChild(cell);
 					j++;
-				}
+				};
 				$container.appendChild(column);
 				i++;
 			}
-		};
+		}
 
 		this.play = function (x, y) {
 			if (board[x][y] === 0) {
@@ -84,7 +87,6 @@
 			return found;
 		};
 
-
 		this.checkWinState = function (winState) {
 			var last;
 
@@ -104,7 +106,7 @@
 			}
 
 			return true;
-		}
+		};
 
 		this.printBoard = function () {
 			var result = '';
@@ -131,14 +133,32 @@
 		};
 	}
 
+	function moveCursor (e) {
+			if (!e) { e = window.event; } // Support IE
+
+			var leftValue = e.clientX - cursorTextLen[0] - 10;
+			var topValue = e.clientY - cursorTextLen[1] - 20;
+			$cursor.style.left = leftValue + 'px';
+			$cursor.style.top = topValue + 'px';
+		}
+
 	var $container = document.querySelector('.game-board');
 	var ticTacToe = new TicTacToe($container);
 
+	var $cursor = document.createElement('div');
+	$cursor.id = 'cursorText';
+	$cursor.setAttribute('class', 'cursor-text');
+	document.body.appendChild($cursor);
+
+	var cursorTextLen = [$cursor.offsetWidth, $cursor.offsetHeight];
 	var $button = document.querySelector('.btn');
 	$button.onclick = function () {
 		ticTacToe.start();
 	};
 
+	document.body.onmousemove = moveCursor;
+
+	// Testing!!
 	function simulatePlay () {
 		ticTacToe.play(0, 0);
 		ticTacToe.play(1, 1);
