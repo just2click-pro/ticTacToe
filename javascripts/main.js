@@ -20,12 +20,22 @@
 		starter = 1;
 
 		this.prepareBoard = function () {
+			board = [];
 			for (var i = 0; i < BOARD_SIZE; i++) {
 					board.push(new Array(BOARD_SIZE).fill(0));
 				}
 		};
 
+		this.resetBoard = function () {
+			var columnsNumber = $container.children.length - 1;
+
+			for (var i = columnsNumber; i >= 0; i--) {
+				$container.removeChild($container.children[i]);
+			}
+		};
+
 		this.renderBoard = function () {
+			that.resetBoard();
 			var i = 0;
 			for (row of board) {
 				var j = 0;
