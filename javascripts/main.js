@@ -40,30 +40,28 @@
 						that.play(parseInt(getXY[1], 10), parseInt(getXY[2], 10));
 					};
 					cell.onmouseover = function (e) {
-						$cursor.textContent = (starter === 2 ? 'X' : 'O');
+						$cursor.textContent = that.getCurrentSign();
 					};
 					cell.onmouseleave = function (e) {
 						$cursor.textContent = '';
-					}
+					};
 					column.appendChild(cell);
 					j++;
 				}
 				$container.appendChild(column);
 				i++;
 			}
-		}
+		};
 
 		this.play = function (x, y) {
 			if (board[x][y] === 0) {
 				board[x][y] = starter;
-				starter = (starter == 1 ? 2 : 1);
 				that.printBoard();
 				that.renderMove(x, y, starter);
-				var hasWinner = that.anyWinner();
-
-				if (hasWinner) {
+				if (that.anyWinner()) {
 					that.doWinner();
 				}
+				starter = (starter == 1 ? 2 : 1);
 			}
 		};
 
@@ -71,12 +69,13 @@
 			var cell = document.querySelector('#pos_' + x + '_' + y);
 			var innerSpan = document.createElement('span');
 			innerSpan.setAttribute('style', 'line-height: 85px');
-			innerSpan.textContent = (sign == 1 ? 'X' : 'O');
+			innerSpan.textContent = that.getCurrentSign();
 			cell.appendChild(innerSpan);
 		};
 
 		this.doWinner = function () {
 			console.log('We have a winner ...');
+			$winnerState.textContent = 'And the winner is: ' + that.getCurrentSign();
 		};
 
 		this.anyWinner = function () {
@@ -109,6 +108,10 @@
 			}
 
 			return true;
+		};
+
+		this.getCurrentSign = function () {
+			return (starter === 2 ? 'X' : 'O');
 		};
 
 		this.printBoard = function () {
@@ -147,6 +150,8 @@
 
 	var $container = document.querySelector('.game-board');
 	var ticTacToe = new TicTacToe($container);
+
+	var $winnerState = document.querySelector('.winner-state');
 
 	var $cursor = document.createElement('div');
 	$cursor.id = 'cursorText';
