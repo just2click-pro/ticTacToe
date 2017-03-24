@@ -42,9 +42,12 @@
 					cell.onmouseover = function (e) {
 						$cursor.textContent = (starter === 2 ? 'X' : 'O');
 					};
+					cell.onmouseleave = function (e) {
+						$cursor.textContent = '';
+					}
 					column.appendChild(cell);
 					j++;
-				};
+				}
 				$container.appendChild(column);
 				i++;
 			}
