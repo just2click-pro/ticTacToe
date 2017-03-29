@@ -23,6 +23,10 @@ a, a:hover {
   text-align: center;
 }
 
+.container h1 {
+  font-family: 'Vast Shadow';
+}
+
 .game-board {
 	border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
@@ -54,11 +58,27 @@ a, a:hover {
   width: 85px;
 }
 
+.sign {
+  font-size: 48px;
+  line-height: 85px;
+}
+
+.sign-x {
+  color: lightblue;
+  text-shadow: 2px 2px blue;
+}
+
+.sign-y {
+  color: lightgreen;
+  text-shadow: 2px 2px green;
+}
+
 .table-row .div-table-col:hover {
   cursor: pointer;
 }
 
 .cursor-text {
+  font-family: 'Overlock SC';
   pointer-events: none;
   position: absolute;
 }

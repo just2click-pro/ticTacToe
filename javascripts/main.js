@@ -78,7 +78,11 @@
 		this.renderMove = function (x, y, sign) {
 			var cell = document.querySelector('#pos_' + x + '_' + y);
 			var innerSpan = document.createElement('span');
-			innerSpan.setAttribute('style', 'line-height: 85px');
+			if (sign === 2) {
+				innerSpan.setAttribute('class', 'sign sign-x');
+			} else {
+				innerSpan.setAttribute('class', 'sign sign-y');
+			}
 			innerSpan.textContent = that.getCurrentSign();
 			cell.appendChild(innerSpan);
 		};
